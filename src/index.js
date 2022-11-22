@@ -19,12 +19,11 @@ module.exports = function check(str, bracketsConfig) {
         stack.push(str[i]);
         
       } else if(str[i] === '|' || str[i] === '7' || str[i] === '8') {
-        count++
+        count++;
         if (count % 2 === 0) {
           stack.pop();
         } else {
           stack.push(str[i]);
-          
         }
       } else if (stack[stack.length - 1] === map[str[i]]) {
         stack.pop();
