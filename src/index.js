@@ -1,33 +1,33 @@
 module.exports = function check(str, bracketsConfig) { 
-  let obj = Object.fromEntries(bracketsConfig);
-  let result = [];
-    
-  const map = (object) => {
-    let objectMap = {};
-    for(let key in obj) {
-      objectMap[object[key]] = key;
-    } return objectMap;
-    
-  }
-    
-    function getBracket (item, object) {
-      for(let key in object) {
-        if (item == obj[key]) {
-          return true;
-        }
-      }
-    }
-
-  let objReverse = map(obj) 
-
-  for(let i = 0; i < str.length; i++) {
-
-      if(getBracket(str[i], obj)) {
-            if (objReverse[str[i]] !== result.pop() && objReverse[str[i]] !== obj[str[i]]) return false;  
-      } else {
-        result.push(str[i]);
-    } 
+  let stack = [];
+  let count = 0;
+  let map = {
+    ')': '(',
+    ']': '[',
+    '}': '{',
+    '|': '|',
+    '2': '2',
+    '4': '3',
+    '6': '5',
+    '7': '7',
+    '8': '8',
+  };
   
-  } return result.length > 0 ? false: true;
-
+  for (let i = 0; i < str.length; i++) {
+      
+      if(str[i] === '(' || str[i] === '[' || str[i] === '{' || str[i] === '3' || str[i] === '5') {
+        stack.push(str[i]);
+        
+      } else if(str[i] === '|' || str[i] === '2' || str[i] === '7' || str[i] === '8') {
+        // stack.push(str[i]);
+        count++;
+        
+      } else if (stack[stack.length - 1] === map[str[i]]) {
+        stack.pop();
+      } else return false
+  }
+  console.log(count)
+  return (stack.length || count % 2 !== 0) ? false: true;
+  
 }
+
